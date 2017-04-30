@@ -6,9 +6,12 @@ use MapasCulturais\App;
 
 class Plugin extends \MapasCulturais\Plugin {
     
-    
+    var $groupName = 'Curadores';
 
     public function _init() {
+        
+        if (isset($this->_config['group_name']))
+            $this->groupName = $this->_config['group_name'];
         
         $app = App::i();
         
@@ -136,7 +139,7 @@ class Plugin extends \MapasCulturais\Plugin {
     
     private function checkPermission(\MapasCulturais\Entities\Project $project) {
     
-        $curadores = $project->getRelatedAgents('Curadores');
+        $curadores = $project->getRelatedAgents($this->groupName);
         $user = App::i()->user->profile;
         
         return in_array($user, $curadores);
