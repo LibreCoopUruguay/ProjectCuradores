@@ -82,11 +82,11 @@ class Plugin extends \MapasCulturais\Plugin {
                 $project->canUser('curate')
                 ) {
                 
-                $app->view->jsObject['entity']['registrations'] = $project->allRegistrations;
+                //$app->view->jsObject['entity']['registrations'] = $project->allRegistrations;
                 
                 // get the satus
                 $app->view->jsObject['curatorPlugin'] = [];
-                foreach ($project->allRegistrations as $r) {
+                foreach ($project->sentRegistrations as $r) {
                     $app->view->jsObject['curatorPlugin'][$r->id] = $r->status;
                 }
             }
