@@ -60,7 +60,6 @@ class Plugin extends \MapasCulturais\Plugin {
                 ?>
                 <script>
                 $.each(MapasCulturais.entity.registrations, function(i, e) {
-                    console.log(e.id);
                     e.status = MapasCulturais.curatorPlugin[e.id];
                 });
                 </script>
