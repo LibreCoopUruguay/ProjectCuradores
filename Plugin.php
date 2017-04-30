@@ -17,15 +17,23 @@ class Plugin extends \MapasCulturais\Plugin {
         //$app->hook('entity(Registration).canUser(view)', function() use ($app, $plugin) {
         $app->hook('entity(Project).canUser(curate)', function($user, &$result) use ($app, $plugin) {
             
-            $result = true;
-            return $result;
+            if (true === $result)
+                return true;
+            
+            $project = $app->view->controller->requestedEntity;
+            
+            $result = $plugin->checkPermission($this);
+            
             
         }, 1000);
         
         $app->hook('entity(Registration).canUser(view)', function($user, &$result) use ($app, $plugin) {
             
-            $result = true;
-            return $result;
+            if (true === $result)
+                return true;
+                
+            $result = $plugin->checkPermission($this->project);
+            
             
         }, 1000);
         
@@ -126,6 +134,14 @@ class Plugin extends \MapasCulturais\Plugin {
         
     }
     
+    private function checkPermission(\MapasCulturais\Entities\Project $project) {
+    
+        $curadores = $project->getRelatedAgents('Curadores');
+        $user = App::i()->user->profile;
+        
+        return in_array($user, $curadores);
+    
+    }
 
     public function register() {
         
